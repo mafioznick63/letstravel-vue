@@ -1,0 +1,230 @@
+/* =====================================================
+   Let's Travel · каталог на Vue 3
+   Глобальні стилі: змінні, база, кнопки, сітка.
+   Стилі компонентів лежать у самих .vue (<style scoped>).
+   Mobile-first: база — для телефона, далі min-width.
+   ===================================================== */
+
+/* ---------- Змінні (світла тема) ---------- */
+:root {
+  --bg: #f4f9ff;
+  --surface: #ffffff;
+  --text: #12304f;
+  --muted: #4a6580;
+  --primary: #1a62c7;
+  --primary-dark: #124a99;
+  --primary-soft: #e3f0fd;
+  --border: #d3e4f6;
+  --on-primary: #ffffff;
+  --input-bg: #ffffff;
+  --danger: #b3261e;
+  --success: #1b6e3c;
+  --shadow: 0 0.5rem 1.5rem rgb(26 98 199 / 0.12);
+
+  --radius: 1.25rem;
+  --radius-sm: 0.75rem;
+  --container: 72rem;
+  --space: clamp(1rem, 0.5rem + 2vw, 1.5rem);
+  --section: clamp(2rem, 1.25rem + 4vw, 4rem);
+}
+
+/* ---------- Темна тема: «Авто» (система) і примусова «Темна» ---------- */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme='auto'] {
+    --bg: #0b1626;
+    --surface: #132238;
+    --text: #e6f0fb;
+    --muted: #a8bdd3;
+    --primary: #5aa2f0;
+    --primary-dark: #8cc0f7;
+    --primary-soft: #1c3350;
+    --border: #2b4863;
+    --on-primary: #0b1626;
+    --input-bg: #0f1d30;
+    --danger: #ff8a80;
+    --success: #7ddc9c;
+    --shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.45);
+  }
+}
+:root[data-theme='dark'] {
+  --bg: #0b1626;
+  --surface: #132238;
+  --text: #e6f0fb;
+  --muted: #a8bdd3;
+  --primary: #5aa2f0;
+  --primary-dark: #8cc0f7;
+  --primary-soft: #1c3350;
+  --border: #2b4863;
+  --on-primary: #0b1626;
+  --input-bg: #0f1d30;
+  --danger: #ff8a80;
+  --success: #7ddc9c;
+  --shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.45);
+}
+
+/* ---------- База ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito', system-ui, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+}
+
+body.no-scroll {
+  overflow: hidden; /* поки відкритий кошик, сторінка під ним не гортається */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+}
+h1 { font-size: clamp(2rem, 1.4rem + 3.5vw, 3.5rem); }
+h2 { font-size: clamp(1.4rem, 1.1rem + 1.5vw, 2rem); }
+h3 { font-size: 1.15rem; }
+p  { margin: 0 0 0.75rem; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+:focus-visible {
+  outline: 3px solid var(--primary-dark);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 200;
+  padding: 0.75rem 1rem;
+  background: var(--primary-dark);
+  color: var(--on-primary);
+  border-radius: var(--radius-sm);
+}
+.skip-link:focus { top: 1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+
+/* ---------- Загальні блоки ---------- */
+.container {
+  width: min(100% - 2 * var(--space), var(--container));
+  margin-inline: auto;
+}
+
+.muted { color: var(--muted); }
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+/* Каталог: сітка сама рахує колонки, без медіазапитів */
+.grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(17rem, 100%), 1fr));
+}
+
+/* Повідомлення: завантаження, помилка, порожньо */
+.status {
+  padding: 2rem 1rem;
+  text-align: center;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.status--error { border-color: var(--danger); }
+.status--success { border-color: var(--success); }
+.status__icon { font-size: 2.5rem; display: block; }
+
+/* Кнопки */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem; /* 44px — зручно для пальця */
+  padding: 0.5rem 1.25rem;
+  border: 2px solid var(--primary);
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--on-primary);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.btn:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn--ghost { background: transparent; color: var(--primary-dark); }
+.btn--ghost:hover { background: var(--primary-soft); color: var(--primary-dark); }
+.btn--block { width: 100%; }
+
+/* Поля форм */
+input:not([type='checkbox']),
+select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.875rem;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--input-bg);
+  color: inherit;
+  font: inherit;
+}
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--primary-dark);
+  outline-offset: 2px;
+  border-color: var(--primary);
+}
+label { font-weight: 700; font-size: 0.95rem; }
+
+/* ---------- Hero ---------- */
+.hero {
+  padding-block: var(--section);
+  text-align: center;
+  background:
+    radial-gradient(circle at 85% 0, var(--primary-soft) 0, transparent 45%),
+    linear-gradient(180deg, var(--primary-soft), var(--bg));
+}
+.hero h1 { color: var(--primary-dark); }
+.hero .lead {
+  max-width: 38rem;
+  margin-inline: auto;
+  font-size: clamp(1.05rem, 1rem + 0.5vw, 1.25rem);
+  color: var(--muted);
+}
+
+.section { padding-block: var(--section); }
+
+/* ---------- Підвал ---------- */
+.site-footer {
+  padding-block: 2rem;
+  text-align: center;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+}
